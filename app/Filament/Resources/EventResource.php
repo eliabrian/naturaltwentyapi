@@ -20,12 +20,19 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Infolists\Components\Group as ComponentsGroup;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\Section as ComponentsSection;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -128,6 +135,10 @@ class EventResource extends Resource
                 IconColumn::make('is_published')->label('Visibility'),
             ])
             ->filters([
+                SelectFilter::make('room_id')
+                    ->relationship('room', 'name')
+                    ->label('Room')
+                    ->indicator('Room'),
                 Filter::make('event_date')
                     ->form([
                         DateTimePicker::make('event_start')
@@ -166,6 +177,7 @@ class EventResource extends Resource
                     })
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -173,6 +185,51 @@ class EventResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                ComponentsGroup::make([
+                    ComponentsSection::make()
+                        ->schema([
+                            TextEntry::make('name'),
+                            TextEntry::make('slug'),
+                            TextEntry::make('status')
+                                ->badge(),
+                            TextEntry::make('room.name')
+                                ->badge(),
+                            TextEntry::make('description')
+                                ->html()
+                                ->columnSpan('full'),
+                        ])
+                        ->columns(2),
+                ])
+                ->columnSpan(2),
+
+                ComponentsGroup::make([
+                    ComponentsSection::make('Image')
+                        ->schema([
+                            ImageEntry::make('image_path')
+                                ->hiddenLabel()
+                                ->extraImgAttributes([
+                                    'loading' => 'lazy',
+                                ])
+                                ->alignCenter()
+                        ]),
+
+                    ComponentsSection::make('Status')
+                        ->schema([
+                            IconEntry::make('is_published')
+                                ->boolean()
+                                ->label('Visibility'),
+
+                            TextEntry::make('event_date')->dateTime('M d, Y - H:i')
+                        ])
+                ])
+            ])
+            ->columns(3);
     }
 
     public static function getRelations(): array

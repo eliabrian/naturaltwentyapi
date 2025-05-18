@@ -20,6 +20,6 @@ class Room extends Model
 
     public function events(): HasMany
     {
-        return $this->hasMany(Events::class);
+        return $this->hasMany(Event::class);
     }
 }
