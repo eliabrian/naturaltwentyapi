@@ -30,7 +30,12 @@ class LatestEvents extends TableWidget
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->options(EventStatus::class)
+                    ->options(EventStatus::class),
+
+                SelectFilter::make('room_id')
+                    ->relationship('room', 'name')
+                    ->label('Room')
+                    ->indicator('Room'),
             ])
             ->actions([
                 Action::make('open')
