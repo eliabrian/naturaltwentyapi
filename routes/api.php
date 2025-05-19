@@ -23,4 +23,16 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relations) {
             $relations->hasMany('games')->readOnly();
         });
+
+    $server->resource('rooms', JsonApiController::class)
+        ->readOnly()
+        ->relationships(function (Relationships $relations) {
+            $relations->hasMany('events')->readOnly();
+        });
+
+    $server->resource('events', JsonApiController::class)
+        ->readOnly()
+        ->relationships(function (Relationships $relations) {
+            $relations->hasOne('room')->readOnly();
+        });
 });

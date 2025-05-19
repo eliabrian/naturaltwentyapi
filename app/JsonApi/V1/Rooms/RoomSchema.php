@@ -1,22 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Games;
+namespace App\JsonApi\V1\Rooms;
 
-use App\JsonApi\Filters\WhereMonth;
-use App\JsonApi\Filters\WhereName;
-use App\Models\Game;
+use App\Models\Room;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use LaravelJsonApi\Eloquent\Filters\WhereIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class GameSchema extends Schema
+class RoomSchema extends Schema
 {
 
     /**
@@ -24,7 +20,7 @@ class GameSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Game::class;
+    public static string $model = Room::class;
 
     /**
      * The maximum include path depth.
@@ -42,17 +38,12 @@ class GameSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name')->sortable(),
-            Str::make('slug'),
-            Str::make('image_path')->serializeUsing(static fn($value) => asset($value)),
-            Str::make('difficulty'),
-            Str::make('player_min'),
-            Str::make('player_max'),
-            Str::make('duration'),
+            Str::make('name'),
             Str::make('description'),
-            BelongsToMany::make('tags'),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            Str::make('image_path')->serializeUsing(static fn($value) => asset($value)),
+            HasMany::make('events')->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
 
@@ -65,7 +56,6 @@ class GameSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            WhereName::make('name'),
         ];
     }
 

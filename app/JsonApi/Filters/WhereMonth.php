@@ -2,12 +2,13 @@
 
 namespace App\JsonApi\Filters;
 
+use Carbon\Carbon;
 use LaravelJsonApi\Core\Support\Str;
 use LaravelJsonApi\Eloquent\Contracts\Filter;
 use LaravelJsonApi\Eloquent\Filters\Concerns\DeserializesValue;
 use LaravelJsonApi\Eloquent\Filters\Concerns\IsSingular;
 
-class WhereName implements Filter
+class WhereMonth implements Filter
 {
     use DeserializesValue;
     use IsSingular;
@@ -21,7 +22,8 @@ class WhereName implements Filter
      * Create a new filter.
      *
      * @param string $name
-     * @return WhereName
+     * @param string|null $column
+     * @return WhereMonth
      */
     public static function make(string $name): self
     {
@@ -29,9 +31,10 @@ class WhereName implements Filter
     }
 
     /**
-     * WhereName constructor.
+     * WhereMonth constructor.
      *
      * @param string $name
+     * @param string|null $column
      */
     public function __construct(string $name)
     {
@@ -58,7 +61,8 @@ class WhereName implements Filter
     public function apply($query, $value): \Illuminate\Database\Eloquent\Builder
     {
         $value = $this->deserialize($value);
+        $value = Carbon::make($value)->format('m');
 
-        return $query->where(fn ($q) => $q->where('name', 'like', "%{$value}%"));
+        return $query->whereMonth($this->name, $value);
     }
 }

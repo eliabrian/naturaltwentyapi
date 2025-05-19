@@ -2,7 +2,9 @@
 
 namespace App\JsonApi\V1;
 
+use App\JsonApi\V1\Events\EventSchema;
 use App\JsonApi\V1\Games\GameSchema;
+use App\JsonApi\V1\Rooms\RoomSchema;
 use App\JsonApi\V1\Tags\TagSchema;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
@@ -36,6 +38,8 @@ class Server extends BaseServer
         return [
             TagSchema::class,
             GameSchema::class,
+            RoomSchema::class,
+            EventSchema::class,
         ];
     }
 }
