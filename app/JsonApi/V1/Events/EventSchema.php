@@ -66,6 +66,7 @@ class EventSchema extends Schema
             WhereIdIn::make($this),
             WhereName::make('name'),
             WhereMonth::make('event_date'),
+            Where::make('status')->eq(),
             Where::make('is_published')->asBoolean(),
         ];
     }
