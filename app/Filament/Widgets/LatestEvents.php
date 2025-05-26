@@ -40,6 +40,7 @@ class LatestEvents extends TableWidget
             ->actions([
                 Action::make('open')
                     ->url(fn (Event $event): string => EventResource::getUrl('edit', ['record' => $event]))
+                    ->icon('heroicon-s-arrow-top-right-on-square')
             ]);
     }
 }

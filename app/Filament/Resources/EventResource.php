@@ -44,7 +44,7 @@ class EventResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
-    protected static ?string $navigationGroup = 'Store Management';
+    protected static ?string $navigationGroup = 'Event Management';
 
     protected static ?string $recordTitleAttribute = 'name';
 
