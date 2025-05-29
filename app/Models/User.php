@@ -72,12 +72,42 @@ class User extends Authenticatable
     }
 
     /**
-     * Return true if the current user is just a user.
+     * Return true if the current user is a Chef.
      *
      * @return bool
      */
-    public function isUser(): bool
+    public function isChef(): bool
     {
-        return $this->role->id === UserRole::User->value;
+        return $this->role->id === UserRole::Chef->value;
+    }
+
+    /**
+     * Return true if the current user is a Cashier.
+     *
+     * @return bool
+     */
+    public function isCashier(): bool
+    {
+        return $this->role->id === UserRole::Cashier->value;
+    }
+
+    /**
+     * Return true if the current user is a Game Master.
+     *
+     * @return bool
+     */
+    public function isGameMaster(): bool
+    {
+        return $this->role->id === UserRole::GameMaster->value;
+    }
+
+    /**
+     * Return true if the current user is a Dungeon Master.
+     *
+     * @return bool
+     */
+    public function isDungeonMaster(): bool
+    {
+        return $this->role->id === UserRole::DungeonMaster->value;
     }
 }

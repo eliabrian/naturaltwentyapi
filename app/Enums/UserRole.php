@@ -8,7 +8,10 @@ use Filament\Support\Contracts\HasLabel;
 enum UserRole: int implements HasLabel, HasColor
 {
     case Admin = 1;
-    case User = 2;
+    case Chef = 2;
+    case Cashier = 3;
+    case GameMaster = 4;
+    case DungeonMaster = 5;
 
     /**
      * Get the label for each role.
@@ -19,7 +22,10 @@ enum UserRole: int implements HasLabel, HasColor
     {
         return match ($this) {
             self::Admin => "Admin",
-            self::User => "User",
+            self::Chef => "Chef",
+            self::Cashier => "Cashier",
+            self::GameMaster => "Game Master",
+            self::DungeonMaster => "Dungeon Master",
         };
     }
 
@@ -32,7 +38,10 @@ enum UserRole: int implements HasLabel, HasColor
     {
         return match ($this) {
             self::Admin => 'info',
-            self::User => 'success',
+            self::Chef => 'success',
+            self::Cashier => 'primary',
+            self::GameMaster => 'gray',
+            self::DungeonMaster => 'danger',
         };
     }
 }

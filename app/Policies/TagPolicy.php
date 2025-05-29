@@ -14,7 +14,7 @@ class TagPolicy
     public function viewAny(?User $user): bool
     {
         if ($user) {
-            return $user->isUser() || $user->isAdmin();
+            return $user->isAdmin();
         }
 
         return true;
@@ -26,7 +26,7 @@ class TagPolicy
     public function view(?User $user, Tag $tag): bool
     {
         if ($user) {
-            return $user->isUser() || $user->isAdmin();
+            return $user->isAdmin();
         }
 
         return true;

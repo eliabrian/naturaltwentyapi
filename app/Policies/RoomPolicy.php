@@ -14,7 +14,7 @@ class RoomPolicy
     public function viewAny(?User $user): bool
     {
         if ($user) {
-            return $user->isUser() || $user->isAdmin();
+            return $user->isAdmin();
         }
 
         return true;
@@ -26,7 +26,7 @@ class RoomPolicy
     public function view(?User $user, Room $room): bool
     {
         if ($user) {
-            return $user->isUser() || $user->isAdmin();
+            return $user->isAdmin();
         }
 
         return true;
@@ -37,7 +37,7 @@ class RoomPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isUser() || $user->isAdmin();
+        return $user->isAdmin();
     }
 
     /**
@@ -45,7 +45,7 @@ class RoomPolicy
      */
     public function update(User $user, Room $room): bool
     {
-        return $user->isUser() || $user->isAdmin();
+        return $user->isAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room): bool
     {
-        return $user->isUser() || $user->isAdmin();
+        return $user->isAdmin();
     }
 
     /**
@@ -61,7 +61,7 @@ class RoomPolicy
      */
     public function restore(User $user, Room $room): bool
     {
-        return $user->isUser() || $user->isAdmin();
+        return $user->isAdmin();
     }
 
     /**
@@ -69,6 +69,6 @@ class RoomPolicy
      */
     public function forceDelete(User $user, Room $room): bool
     {
-        return $user->isUser() || $user->isAdmin();
+        return $user->isAdmin();
     }
 }
