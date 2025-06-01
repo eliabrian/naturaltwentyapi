@@ -14,25 +14,18 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class RoomSchema extends Schema
 {
-
     /**
      * The model the schema corresponds to.
-     *
-     * @var string
      */
     public static string $model = Room::class;
 
     /**
      * The maximum include path depth.
-     *
-     * @var int
      */
     protected int $maxDepth = 3;
 
     /**
      * Get the resource fields.
-     *
-     * @return array
      */
     public function fields(): array
     {
@@ -40,7 +33,7 @@ class RoomSchema extends Schema
             ID::make(),
             Str::make('name'),
             Str::make('description'),
-            Str::make('image_path')->serializeUsing(static fn($value) => asset($value)),
+            Str::make('image_path')->serializeUsing(static fn ($value) => asset($value)),
             HasMany::make('events')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -49,8 +42,6 @@ class RoomSchema extends Schema
 
     /**
      * Get the resource filters.
-     *
-     * @return array
      */
     public function filters(): array
     {
@@ -61,12 +52,9 @@ class RoomSchema extends Schema
 
     /**
      * Get the resource paginator.
-     *
-     * @return Paginator|null
      */
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
     }
-
 }

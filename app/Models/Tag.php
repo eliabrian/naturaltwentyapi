@@ -32,8 +32,6 @@ class Tag extends Model
 
     /**
      * Return the pivot table of the tag.
-     *
-     * @return HasMany
      */
     public function gameTags(): HasMany
     {

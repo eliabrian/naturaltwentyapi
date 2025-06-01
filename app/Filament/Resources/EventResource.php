@@ -4,10 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Enums\EventStatus;
 use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use Carbon\Carbon;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
@@ -35,7 +33,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class EventResource extends Resource
@@ -87,7 +84,7 @@ class EventResource extends Resource
                                 ->required(),
                         ])->collapsible(),
                 ])
-                ->columnSpan(2),
+                    ->columnSpan(2),
 
                 Group::make([
                     Section::make('Relationship')
@@ -120,9 +117,9 @@ class EventResource extends Resource
                                 ->native(false)
                                 ->closeOnDateSelection()
                                 ->timezone('Asia/Jakarta')
-                                ->required()
-                        ])
-                ])
+                                ->required(),
+                        ]),
+                ]),
             ])
             ->columns(3);
     }
@@ -169,15 +166,15 @@ class EventResource extends Resource
                         $indicators = [];
 
                         if ($data['event_start'] ?? null) {
-                            $indicators['event_start'] = "Event from: " . Carbon::parse($data['event_start'])->format('M d, Y - H:i');
+                            $indicators['event_start'] = 'Event from: '.Carbon::parse($data['event_start'])->format('M d, Y - H:i');
                         }
 
                         if ($data['event_end'] ?? null) {
-                            $indicators['event_end'] = "Event until: " . Carbon::parse($data['event_end'])->format('M d, Y - H:i');
+                            $indicators['event_end'] = 'Event until: '.Carbon::parse($data['event_end'])->format('M d, Y - H:i');
                         }
 
                         return $indicators;
-                    })
+                    }),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -209,7 +206,7 @@ class EventResource extends Resource
                         ])
                         ->columns(2),
                 ])
-                ->columnSpan(2),
+                    ->columnSpan(2),
 
                 ComponentsGroup::make([
                     ComponentsSection::make('Image')
@@ -219,7 +216,7 @@ class EventResource extends Resource
                                 ->extraImgAttributes([
                                     'loading' => 'lazy',
                                 ])
-                                ->alignCenter()
+                                ->alignCenter(),
                         ]),
 
                     ComponentsSection::make('Status')
@@ -228,9 +225,9 @@ class EventResource extends Resource
                                 ->boolean()
                                 ->label('Visibility'),
 
-                            TextEntry::make('event_date')->dateTime('M d, Y - H:i')
-                        ])
-                ])
+                            TextEntry::make('event_date')->dateTime('M d, Y - H:i'),
+                        ]),
+                ]),
             ])
             ->columns(3);
     }

@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoomResource\Pages;
-use App\Filament\Resources\RoomResource\RelationManagers;
 use App\Models\Room;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\RichEditor;
@@ -17,8 +15,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoomResource extends Resource
 {
@@ -42,7 +38,7 @@ class RoomResource extends Resource
 
                             RichEditor::make('description'),
                         ])
-                        ->columns(1)
+                        ->columns(1),
                 ])->columnSpan(2),
 
                 Group::make([
@@ -57,8 +53,8 @@ class RoomResource extends Resource
                                 ->maxSize(10240)
                                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                 ->required(),
-                        ])
-                ])
+                        ]),
+                ]),
             ])->columns(3);
     }
 

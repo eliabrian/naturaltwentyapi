@@ -3,14 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TagResource\Pages;
-use App\Filament\Resources\TagResource\RelationManagers;
 use App\Filament\Resources\TagResource\RelationManagers\GamesRelationManager;
 use App\Models\Tag;
-use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -20,8 +16,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class TagResource extends Resource
@@ -78,7 +72,7 @@ class TagResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ])
-                ->hidden(fn(?Tag $tag) => !auth()->user()->can('delete', $tag)),
+                    ->hidden(fn (?Tag $tag) => ! auth()->user()->can('delete', $tag)),
             ]);
     }
 

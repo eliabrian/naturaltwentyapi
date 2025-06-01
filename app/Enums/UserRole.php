@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum UserRole: int implements HasLabel, HasColor
+enum UserRole: int implements HasColor, HasLabel
 {
     case Admin = 1;
     case Chef = 2;
@@ -15,24 +15,20 @@ enum UserRole: int implements HasLabel, HasColor
 
     /**
      * Get the label for each role.
-     *
-     * @return null|string
      */
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Admin => "Admin",
-            self::Chef => "Chef",
-            self::Cashier => "Cashier",
-            self::GameMaster => "Game Master",
-            self::DungeonMaster => "Dungeon Master",
+            self::Admin => 'Admin',
+            self::Chef => 'Chef',
+            self::Cashier => 'Cashier',
+            self::GameMaster => 'Game Master',
+            self::DungeonMaster => 'Dungeon Master',
         };
     }
 
     /**
      * Get the color for each role.
-     *
-     * @return string|array|null
      */
     public function getColor(): string|array|null
     {

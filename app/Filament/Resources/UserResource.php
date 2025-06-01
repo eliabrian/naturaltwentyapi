@@ -4,12 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -18,11 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
-
-use function PHPUnit\Framework\callback;
 
 class UserResource extends Resource
 {
@@ -87,7 +80,7 @@ class UserResource extends Resource
             ->filters(filters: [
                 SelectFilter::make(name: 'role_id')
                     ->options(UserRole::class)
-                    ->label('Role')
+                    ->label('Role'),
             ])
             ->actions(actions: [
                 Tables\Actions\EditAction::make(),
@@ -98,7 +91,7 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ])
-                ->hidden(fn(?User $user) => !auth()->user()->can('delete', $user)),
+                    ->hidden(fn (?User $user) => ! auth()->user()->can('delete', $user)),
             ]);
     }
 
@@ -117,7 +110,7 @@ class UserResource extends Resource
 
                 TextEntry::make('created_at')
                     ->label('Joined At')
-                    ->date()
+                    ->date(),
             ])
             ->columns(columns: 1);
     }

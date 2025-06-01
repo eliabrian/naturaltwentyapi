@@ -18,25 +18,18 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class EventSchema extends Schema
 {
-
     /**
      * The model the schema corresponds to.
-     *
-     * @var string
      */
     public static string $model = Event::class;
 
     /**
      * The maximum include path depth.
-     *
-     * @var int
      */
     protected int $maxDepth = 3;
 
     /**
      * Get the resource fields.
-     *
-     * @return array
      */
     public function fields(): array
     {
@@ -44,7 +37,7 @@ class EventSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('slug'),
-            Str::make('image_path')->serializeUsing(static fn($value) => asset($value)),
+            Str::make('image_path')->serializeUsing(static fn ($value) => asset($value)),
             Boolean::make('is_published'),
             Str::make('status'),
             Str::make('description'),
@@ -57,8 +50,6 @@ class EventSchema extends Schema
 
     /**
      * Get the resource filters.
-     *
-     * @return array
      */
     public function filters(): array
     {
@@ -73,12 +64,9 @@ class EventSchema extends Schema
 
     /**
      * Get the resource paginator.
-     *
-     * @return Paginator|null
      */
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
     }
-
 }

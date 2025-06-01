@@ -12,7 +12,7 @@ use Filament\Widgets\TableWidget;
 
 class LatestEvents extends TableWidget
 {
-    protected int |string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected static ?int $sort = 2;
 
@@ -40,7 +40,7 @@ class LatestEvents extends TableWidget
             ->actions([
                 Action::make('open')
                     ->url(fn (Event $event): string => EventResource::getUrl('edit', ['record' => $event]))
-                    ->icon('heroicon-s-arrow-top-right-on-square')
+                    ->icon('heroicon-s-arrow-top-right-on-square'),
             ]);
     }
 }

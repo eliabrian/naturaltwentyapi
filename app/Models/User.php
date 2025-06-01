@@ -53,8 +53,6 @@ class User extends Authenticatable
 
     /**
      * Get the role that owns the user.
-     *
-     * @return BelongsTo
      */
     public function role(): BelongsTo
     {
@@ -63,8 +61,6 @@ class User extends Authenticatable
 
     /**
      * Return true if the User is an admin user.
-     *
-     * @return bool
      */
     public function isAdmin(): bool
     {
@@ -73,8 +69,6 @@ class User extends Authenticatable
 
     /**
      * Return true if the current user is a Chef.
-     *
-     * @return bool
      */
     public function isChef(): bool
     {
@@ -83,8 +77,6 @@ class User extends Authenticatable
 
     /**
      * Return true if the current user is a Cashier.
-     *
-     * @return bool
      */
     public function isCashier(): bool
     {
@@ -93,8 +85,6 @@ class User extends Authenticatable
 
     /**
      * Return true if the current user is a Game Master.
-     *
-     * @return bool
      */
     public function isGameMaster(): bool
     {
@@ -103,8 +93,6 @@ class User extends Authenticatable
 
     /**
      * Return true if the current user is a Dungeon Master.
-     *
-     * @return bool
      */
     public function isDungeonMaster(): bool
     {

@@ -23,7 +23,7 @@ class Game extends Model
         'player_min',
         'player_max',
         'duration',
-        'description'
+        'description',
     ];
 
     /**
@@ -51,8 +51,6 @@ class Game extends Model
 
     /**
      * Return the pivot table of the game.
-     *
-     * @return HasMany
      */
     public function gameTags(): HasMany
     {

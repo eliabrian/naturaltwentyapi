@@ -4,9 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\GameDifficulty;
 use App\Filament\Resources\GameResource\Pages;
-use App\Filament\Resources\GameResource\RelationManagers;
 use App\Models\Game;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
@@ -29,8 +27,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class GameResource extends Resource
@@ -116,9 +112,9 @@ class GameResource extends Resource
                                 ->gt(0)
                                 ->rules(rules: ['integer']),
                         ])
-                        ->columns(2)
+                        ->columns(2),
                 ])
-                ->columnSpan(2),
+                    ->columnSpan(2),
 
                 Group::make([
                     Section::make('Relationships')
@@ -145,8 +141,8 @@ class GameResource extends Resource
                                 ->label('Last Modified At')
                                 ->content(fn (?Game $game): ?string => $game->updated_at?->diffForHumans()),
                         ])
-                        ->hidden(fn (?Game $game) => empty($game->toArray()))
-                ])
+                        ->hidden(fn (?Game $game) => empty($game->toArray())),
+                ]),
             ])
             ->columns(3);
     }
@@ -177,7 +173,7 @@ class GameResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                ])->hidden(fn(?Game $game) => !auth()->user()->can('delete', $game)),
+                ])->hidden(fn (?Game $game) => ! auth()->user()->can('delete', $game)),
             ])
             ->poll()
             ->deferLoading();
@@ -212,9 +208,9 @@ class GameResource extends Resource
                             TextEntry::make('duration')
                                 ->label('Duration (minutes)'),
                         ])
-                        ->columns(2)
+                        ->columns(2),
                 ])
-                ->columnSpan(2),
+                    ->columnSpan(2),
 
                 ComponentsGroup::make([
                     ComponentsSection::make('Image')
@@ -224,7 +220,7 @@ class GameResource extends Resource
                                 ->extraImgAttributes([
                                     'loading' => 'lazy',
                                 ])
-                                ->alignCenter()
+                                ->alignCenter(),
                         ]),
                     ComponentsSection::make('Relationships')
                         ->schema([
@@ -242,9 +238,9 @@ class GameResource extends Resource
 
                             TextEntry::make('updated_at')
                                 ->label('Last Modified At')
-                                ->since()
-                        ])
-                ])
+                                ->since(),
+                        ]),
+                ]),
             ])
             ->columns(3);
     }

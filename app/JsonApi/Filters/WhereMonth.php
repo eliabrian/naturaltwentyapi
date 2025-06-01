@@ -3,7 +3,6 @@
 namespace App\JsonApi\Filters;
 
 use Carbon\Carbon;
-use LaravelJsonApi\Core\Support\Str;
 use LaravelJsonApi\Eloquent\Contracts\Filter;
 use LaravelJsonApi\Eloquent\Filters\Concerns\DeserializesValue;
 use LaravelJsonApi\Eloquent\Filters\Concerns\IsSingular;
@@ -13,17 +12,12 @@ class WhereMonth implements Filter
     use DeserializesValue;
     use IsSingular;
 
-    /**
-     * @var string
-     */
     private string $name;
 
     /**
      * Create a new filter.
      *
-     * @param string $name
-     * @param string|null $column
-     * @return WhereMonth
+     * @param  string|null  $column
      */
     public static function make(string $name): self
     {
@@ -33,8 +27,7 @@ class WhereMonth implements Filter
     /**
      * WhereMonth constructor.
      *
-     * @param string $name
-     * @param string|null $column
+     * @param  string|null  $column
      */
     public function __construct(string $name)
     {
@@ -43,8 +36,6 @@ class WhereMonth implements Filter
 
     /**
      * Get the key for the filter.
-     *
-     * @return string
      */
     public function key(): string
     {
@@ -54,9 +45,8 @@ class WhereMonth implements Filter
     /**
      * Apply the filter to the query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param mixed $value
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $value
      */
     public function apply($query, $value): \Illuminate\Database\Eloquent\Builder
     {

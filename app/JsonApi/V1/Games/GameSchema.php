@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\V1\Games;
 
-use App\JsonApi\Filters\WhereMonth;
 use App\JsonApi\Filters\WhereName;
 use App\Models\Game;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
@@ -10,33 +9,24 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use LaravelJsonApi\Eloquent\Filters\WhereIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
 class GameSchema extends Schema
 {
-
     /**
      * The model the schema corresponds to.
-     *
-     * @var string
      */
     public static string $model = Game::class;
 
     /**
      * The maximum include path depth.
-     *
-     * @var int
      */
     protected int $maxDepth = 3;
 
     /**
      * Get the resource fields.
-     *
-     * @return array
      */
     public function fields(): array
     {
@@ -44,7 +34,7 @@ class GameSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('slug'),
-            Str::make('image_path')->serializeUsing(static fn($value) => asset($value)),
+            Str::make('image_path')->serializeUsing(static fn ($value) => asset($value)),
             Str::make('difficulty'),
             Str::make('player_min'),
             Str::make('player_max'),
@@ -58,8 +48,6 @@ class GameSchema extends Schema
 
     /**
      * Get the resource filters.
-     *
-     * @return array
      */
     public function filters(): array
     {
@@ -71,12 +59,9 @@ class GameSchema extends Schema
 
     /**
      * Get the resource paginator.
-     *
-     * @return Paginator|null
      */
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
     }
-
 }

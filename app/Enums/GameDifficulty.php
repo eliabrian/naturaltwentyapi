@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum GameDifficulty: string implements HasLabel, HasColor
+enum GameDifficulty: string implements HasColor, HasLabel
 {
     case Kids = 'kids';
 
@@ -19,33 +19,29 @@ enum GameDifficulty: string implements HasLabel, HasColor
 
     /**
      * Get the label for each difficultyy.
-     *
-     * @return null|string
      */
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Kids => "Kids",
-            self::Easy => "Easy",
-            self::Medium => "Medium",
-            self::Hard => "Hard",
-            self::Expert => "Expert",
+            self::Kids => 'Kids',
+            self::Easy => 'Easy',
+            self::Medium => 'Medium',
+            self::Hard => 'Hard',
+            self::Expert => 'Expert',
         };
     }
 
     /**
      * Get the color for each difficulty.
-     *
-     * @return string|array|null
      */
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::Kids => "info",
-            self::Easy => "success",
-            self::Medium => "gray",
-            self::Hard => "warning",
-            self::Expert => "danger",
+            self::Kids => 'info',
+            self::Easy => 'success',
+            self::Medium => 'gray',
+            self::Hard => 'warning',
+            self::Expert => 'danger',
         };
     }
 }

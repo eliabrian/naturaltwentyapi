@@ -13,13 +13,11 @@ class Role extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**
      * Get the users for the role.
-     *
-     * @return HasMany
      */
     public function users(): HasMany
     {
