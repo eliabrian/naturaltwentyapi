@@ -26,6 +26,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -154,6 +155,7 @@ class GameResource extends Resource
     {
         return $table
             ->columns([
+                ToggleColumn::make('is_available')->label('Status'),
                 ImageColumn::make('image_path')->label('Image'),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('difficulty')->badge(),
@@ -176,7 +178,9 @@ class GameResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ])->hidden(fn(?Game $game) => !auth()->user()->can('delete', $game)),
-            ]);
+            ])
+            ->poll()
+            ->deferLoading();
     }
 
     public static function infolist(Infolist $infolist): Infolist
