@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\OpnameResource\Pages;
 
 use App\Filament\Resources\OpnameResource;
-use Filament\Actions;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
@@ -25,7 +24,7 @@ class CreateOpname extends CreateRecord
                     ->startOnStep($this->getStartStep())
                     ->cancelAction($this->getCancelFormAction())
                     ->submitAction($this->getSubmitFormAction())
-                    ->contained(false)
+                    ->contained(false),
             ])
             ->columns(null);
     }
@@ -41,7 +40,7 @@ class CreateOpname extends CreateRecord
             Step::make('Opname Items')
                 ->schema([
                     Section::make()->schema([
-                        OpnameResource::getProductsRepeater()
+                        OpnameResource::getProductsRepeater(),
                     ])->columns(),
                 ]),
         ];

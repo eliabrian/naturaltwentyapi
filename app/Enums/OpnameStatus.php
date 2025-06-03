@@ -15,7 +15,7 @@ enum OpnameStatus: string implements HasColor, HasLabel
 
     case Approved = 'approved';
 
-     /**
+    /**
      * Get the label for each difficultyy.
      */
     public function getLabel(): ?string

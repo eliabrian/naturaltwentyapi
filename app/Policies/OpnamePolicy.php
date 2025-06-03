@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\OpnameStatus;
 use App\Models\Opname;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class OpnamePolicy
 {

@@ -5,10 +5,8 @@ namespace App\Filament\Resources;
 use App\Enums\OpnameShift;
 use App\Enums\OpnameStatus;
 use App\Filament\Resources\OpnameResource\Pages;
-use App\Filament\Resources\OpnameResource\RelationManagers;
 use App\Models\Opname;
 use App\Models\Product;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
@@ -24,8 +22,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class OpnameResource extends Resource
@@ -44,29 +40,28 @@ class OpnameResource extends Resource
                     Section::make('Opname Details')
                         ->schema([
                             TextInput::make('reference')
-                                ->default('OP-' . random_int(100000, 999999))
+                                ->default('OP-'.random_int(100000, 999999))
                                 ->disabled()
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(32)
                                 ->unique(Opname::class, 'reference', ignoreRecord: true),
 
-                                DateTimePicker::make('opname_date')
-                                    ->label('Opname Date')
-                                    ->default(now())
-                                    ->required(),
+                            DateTimePicker::make('opname_date')
+                                ->label('Opname Date')
+                                ->default(now())
+                                ->required(),
 
-                                Select::make('shift')
-                                    ->options(OpnameShift::class)
-                                    ->required(),
+                            Select::make('shift')
+                                ->options(OpnameShift::class)
+                                ->required(),
                         ])
                         ->columns(2),
 
-                        Section::make('Opname Items')
-                            ->schema([
-                                static::getProductsRepeater(),
-                            ])
-
+                    Section::make('Opname Items')
+                        ->schema([
+                            static::getProductsRepeater(),
+                        ]),
 
                 ])->columnSpan(2),
 
@@ -87,8 +82,8 @@ class OpnameResource extends Resource
 
                             Placeholder::make('created_at')
                                 ->content(fn (Opname $opname): ?string => $opname->created_at),
-                        ])
-                ])
+                        ]),
+                ]),
             ])
             ->columns(3);
     }
@@ -102,7 +97,7 @@ class OpnameResource extends Resource
                 TextColumn::make('user.name')->searchable(),
                 TextColumn::make('shift'),
                 TextColumn::make('opname_date')
-                ->label('Opname Date')->dateTime('M d, Y - H:i:s'),
+                    ->label('Opname Date')->dateTime('M d, Y - H:i:s'),
             ])
             ->filters([
                 //
@@ -138,7 +133,7 @@ class OpnameResource extends Resource
     {
         return [
             TextInput::make('reference')
-                ->default('OP-' . random_int(100000, 999999))
+                ->default('OP-'.random_int(100000, 999999))
                 ->disabled()
                 ->dehydrated()
                 ->required()
@@ -166,7 +161,7 @@ class OpnameResource extends Resource
 
             Select::make('shift')
                 ->options(OpnameShift::class)
-                ->required()
+                ->required(),
         ];
     }
 
@@ -201,6 +196,7 @@ class OpnameResource extends Resource
                     })
                     ->afterStateUpdated(function ($state, Set $set, Get $get) {
                         $system = $get('system_quantity');
+
                         return $set('difference', $state - $system);
                     })
                     ->required(),
