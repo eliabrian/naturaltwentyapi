@@ -61,7 +61,6 @@ class GameResource extends Resource
                                 ->required(),
 
                             RichEditor::make('description')
-                                ->required()
                                 ->columnSpan(2),
                         ])
                         ->columns(2),
@@ -76,7 +75,6 @@ class GameResource extends Resource
                                 ->directory('game-images')
                                 ->maxSize(10240)
                                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                ->required(),
                         ])->collapsible(),
 
                     Section::make('Game Details')
@@ -130,18 +128,6 @@ class GameResource extends Resource
                                 ->multiple()
                                 ->required(),
                         ]),
-
-                    Section::make()
-                        ->schema([
-                            Placeholder::make('created_at')
-                                ->label('Created At')
-                                ->content(fn (Game $game): ?string => $game->created_at?->diffForHumans()),
-
-                            Placeholder::make('updated_at')
-                                ->label('Last Modified At')
-                                ->content(fn (?Game $game): ?string => $game->updated_at?->diffForHumans()),
-                        ])
-                        ->hidden(fn (?Game $game) => empty($game->toArray())),
                 ]),
             ])
             ->columns(3);

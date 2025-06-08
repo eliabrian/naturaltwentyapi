@@ -13,7 +13,7 @@ class RoomPolicy
     public function viewAny(?User $user): bool
     {
         if ($user) {
-            return $user->isAdmin();
+            return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
         }
 
         return true;
@@ -25,7 +25,7 @@ class RoomPolicy
     public function view(?User $user, Room $room): bool
     {
         if ($user) {
-            return $user->isAdmin();
+            return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
         }
 
         return true;
@@ -36,7 +36,7 @@ class RoomPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
     }
 
     /**
@@ -44,7 +44,7 @@ class RoomPolicy
      */
     public function update(User $user, Room $room): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
     }
 
     /**
@@ -52,7 +52,7 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
     }
 
     /**
@@ -60,7 +60,7 @@ class RoomPolicy
      */
     public function restore(User $user, Room $room): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
     }
 
     /**
@@ -68,6 +68,6 @@ class RoomPolicy
      */
     public function forceDelete(User $user, Room $room): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isGameMaster() || $user->isDungeonMaster();
     }
 }

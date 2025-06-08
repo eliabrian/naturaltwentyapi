@@ -24,6 +24,7 @@ class Game extends Model
         'player_max',
         'duration',
         'description',
+        'is_available',
     ];
 
     /**
@@ -35,6 +36,7 @@ class Game extends Model
     {
         return [
             'difficulty' => GameDifficulty::class,
+            'is_available' => 'boolean',
         ];
     }
 

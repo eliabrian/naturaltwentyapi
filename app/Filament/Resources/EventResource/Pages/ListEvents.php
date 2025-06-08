@@ -23,10 +23,10 @@ class ListEvents extends ListRecords
     {
         return [
             'all' => Tab::make(),
-            'new' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::New)),
-            'progress' => Tab::make('In Progress')->query(fn ($query) => $query->where('status', EventStatus::Progress)),
-            'done' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::Done)),
-            'cancelled' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::Cancelled)),
+            'new' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::New->value)),
+            'progress' => Tab::make('In Progress')->query(fn ($query) => $query->where('status', EventStatus::Progress->value)),
+            'done' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::Done->value)),
+            'cancelled' => Tab::make()->query(fn ($query) => $query->where('status', EventStatus::Cancelled->value)),
         ];
     }
 }

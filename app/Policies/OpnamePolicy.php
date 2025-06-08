@@ -13,7 +13,7 @@ class OpnamePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 
     /**
@@ -21,7 +21,7 @@ class OpnamePolicy
      */
     public function view(User $user, Opname $opname): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 
     /**
@@ -29,7 +29,7 @@ class OpnamePolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 
     /**
@@ -37,7 +37,7 @@ class OpnamePolicy
      */
     public function update(User $user, Opname $opname): bool
     {
-        return $opname->status->value !== OpnameStatus::Approved->value;
+        return ($user->isAdmin() || $user->isChef() || $user->isCashier()) && ($opname->status->value !== OpnameStatus::Approved->value);
     }
 
     /**
@@ -45,7 +45,7 @@ class OpnamePolicy
      */
     public function delete(User $user, Opname $opname): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 
     /**
@@ -53,7 +53,7 @@ class OpnamePolicy
      */
     public function restore(User $user, Opname $opname): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 
     /**
@@ -61,6 +61,6 @@ class OpnamePolicy
      */
     public function forceDelete(User $user, Opname $opname): bool
     {
-        return $user->isAdmin() || $user->isChef() || $user->isCashier() || $user->isGameMaster();
+        return $user->isAdmin() || $user->isChef() || $user->isCashier();
     }
 }
