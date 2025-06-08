@@ -19,6 +19,11 @@ class EditOpname extends EditRecord
         ];
     }
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function afterSave(): void
     {
         $status = $this->record->status->value;

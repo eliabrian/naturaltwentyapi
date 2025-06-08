@@ -5,8 +5,10 @@ namespace App\Filament\Resources;
 use App\Enums\OpnameShift;
 use App\Enums\OpnameStatus;
 use App\Filament\Resources\OpnameResource\Pages;
+use App\Filament\Resources\OpnameResource\Widgets\OpnameStats;
 use App\Models\Opname;
 use App\Models\Product;
+use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
@@ -21,7 +23,9 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class OpnameResource extends Resource
@@ -71,8 +75,7 @@ class OpnameResource extends Resource
                             ToggleButtons::make('status')
                                 ->inline()
                                 ->options(OpnameStatus::class)
-                                ->required()
-                                ->disabled(fn ($state) => $state === OpnameStatus::Approved->value),
+                                ->required(),
                         ]),
 
                     Section::make('User')
@@ -100,7 +103,30 @@ class OpnameResource extends Resource
                     ->label('Opname Date')->dateTime('M d, Y - H:i:s'),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options(OpnameStatus::class),
+
+                SelectFilter::make('opname_date')
+                    ->label('Opname Date')
+                    ->options([
+                        'today' => 'Today',
+                        'yesterday' => 'Yesterday',
+                        'a_week' => 'Last 7 Days',
+                        'a_month' => 'Last 30 Days',
+                        'a_year' => 'Last 1 Year',
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        $now = Carbon::now();
+
+                        return match ($data['value']) {
+                            'today' => $query->whereDate('opname_date', $now->toDateString()),
+                            'yesterday' => $query->whereDate('opname_date', $now->copy()->subDay()->toDateString()),
+                            'a_week' => $query->where('opname_date', '>=', $now->copy()->subDays(7)),
+                            'a_month' => $query->where('opname_date', '>=', $now->copy()->subDays(30)),
+                            'a_year' => $query->where('opname_date', '>=', $now->copy()->subYear()),
+                            default => $query,
+                        };
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -212,10 +238,14 @@ class OpnameResource extends Resource
                     ->label('Note')
                     ->columnSpan('full'),
             ])
-            ->deletable(fn (Get $get) => $get('status') !== OpnameStatus::Approved->value)
-            ->addable(fn (Get $get) => $get('status') !== OpnameStatus::Approved->value)
-            ->disabled(fn (Get $get) => $get('status') === OpnameStatus::Approved->value)
             ->columns(2)
             ->columnSpan('full');
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            OpnameStats::class,
+        ];
     }
 }
