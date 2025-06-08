@@ -23,6 +23,7 @@ return new class extends Migration
                 ->default(2)
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->enum('type', ['owner', 'part_time', 'full_time']);
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

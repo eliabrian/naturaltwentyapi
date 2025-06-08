@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\UserRole;
+use App\Enums\UserType;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms\Components\Select;
@@ -39,6 +40,11 @@ class UserResource extends Resource
                     ->required()
                     ->email(),
 
+                Select::make('type')
+                    ->options(UserType::class)
+                    ->label('Type')
+                    ->required(),
+
                 Select::make(name: 'role_id')
                     ->options(UserRole::class)
                     ->searchable()
@@ -50,7 +56,7 @@ class UserResource extends Resource
                     ->required(condition: fn (string $context): bool => $context === 'create')
                     ->password()
                     ->revealable()
-                    ->confirmed()
+                    // ->confirmed()
                     ->dehydrateStateUsing(
                         callback: fn ($state): string => Hash::make(value: $state)
                     )
@@ -58,9 +64,9 @@ class UserResource extends Resource
                         condition: fn ($state): bool => filled(value: $state)
                     ),
 
-                TextInput::make(name: 'password_confirmation')
-                    ->password()
-                    ->revealable(),
+                // TextInput::make(name: 'password_confirmation')
+                //     ->password()
+                //     ->revealable(),
             ])
             ->columns(columns: 1);
     }
@@ -73,6 +79,9 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make(name: 'email')
                     ->searchable(),
+                TextColumn::make(name: 'type')
+                    ->badge()
+                    ->label('Type'),
                 TextColumn::make(name: 'role_id')
                     ->badge()
                     ->label('Role'),
@@ -103,6 +112,10 @@ class UserResource extends Resource
 
                 TextEntry::make('email')
                     ->label('Email Address'),
+
+                TextEntry::make(name: 'type')
+                    ->badge()
+                    ->label('Type'),
 
                 TextEntry::make(name: 'role_id')
                     ->badge()

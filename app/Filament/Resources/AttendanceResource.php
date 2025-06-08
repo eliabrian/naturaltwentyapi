@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserType;
 use App\Filament\Resources\AttendanceResource\Pages;
 use App\Filament\Resources\AttendanceResource\RelationManagers;
 use App\Models\Attendance;
@@ -14,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -40,6 +42,7 @@ class AttendanceResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')->searchable()->sortable(),
+                TextColumn::make('user.type')->badge()->label('Type'),
                 TextColumn::make('group_date')->label('Date')->sortable(),
                 TextColumn::make('started_at')->dateTime('H:i:s')->color(function ($record) {
                     $date = Carbon::parse($record->started_at);
@@ -69,15 +72,33 @@ class AttendanceResource extends Resource
                     )
             ])
             ->filters([
+                SelectFilter::make('user.name')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                SelectFilter::make('user_type')
+                    ->options(UserType::class)
+                    ->searchable()
+                    ->query(function (Builder $query, $state) {
+                        if ($state['value']) {
+                            $query->whereHas('user', function ($q) use ($state) {
+                                $q->where('type', $state['value']);
+                            });
+                        }
+                    }),
+
                 Filter::make('attendance_date')
                     ->form([
                         DatePicker::make('attendance_start')
                             ->native(false)
-                            ->label('Attendance from'),
+                            ->label('Attendance from')
+                            ->closeOnDateSelection(),
 
                         DatePicker::make('attendance_end')
                             ->native(false)
-                            ->label('Attendance until'),
+                            ->label('Attendance until')
+                            ->closeOnDateSelection(),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -114,10 +135,7 @@ class AttendanceResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('started_at', 'desc')
-            ->groups([
-                'user.name',
-            ]);
+            ->defaultSort('started_at', 'desc');
     }
 
     public static function getRelations(): array
