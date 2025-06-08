@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Filament\Widgets;
+
 use App\Enums\EventStatus;
 use App\Filament\Resources\EventResource;
 use App\Models\Event;
