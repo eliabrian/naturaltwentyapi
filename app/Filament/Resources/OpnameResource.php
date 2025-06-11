@@ -103,9 +103,6 @@ class OpnameResource extends Resource
                     ->label('Opname Date')->dateTime('M d, Y - H:i:s'),
             ])
             ->filters([
-                SelectFilter::make('status')
-                    ->options(OpnameStatus::class),
-
                 SelectFilter::make('opname_date')
                     ->label('Opname Date')
                     ->options([

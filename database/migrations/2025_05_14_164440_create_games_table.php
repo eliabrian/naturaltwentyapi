@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('image_path');
+            $table->string('image_path')->nullable();
             $table->enum('difficulty', ['kids', 'easy', 'medium', 'hard', 'expert'])
                 ->default('kids');
 
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->smallInteger('duration')
                 ->default(0);
 
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
