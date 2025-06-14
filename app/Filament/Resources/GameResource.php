@@ -137,7 +137,17 @@ class GameResource extends Resource
     {
         return $table
             ->columns([
-                ToggleColumn::make('is_available')->label('Status'),
+                ToggleColumn::make('is_available')
+                    ->label('Status')
+                    ->afterStateUpdated(function ($record, $state) {
+                        // The GameObserver will handle the broadcasting
+                        // This callback ensures the UI is updated immediately
+                        return $state;
+                    })
+                    ->extraAttributes(function ($record) {
+                        return ['data-game-id' => $record->id];
+                    })
+                    ,
                 ImageColumn::make('image_path')->label('Image'),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('difficulty')->badge(),
@@ -161,7 +171,6 @@ class GameResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ])->hidden(fn (?Game $game) => ! auth()->user()->can('delete', $game)),
             ])
-            ->poll()
             ->deferLoading();
     }
 
