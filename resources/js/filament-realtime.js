@@ -62,24 +62,6 @@ function showFilamentNotification(event) {
             available: event.is_available
         });
     }
-
-    // Fallback to browser notification if permission granted
-    if ('Notification' in window && Notification.permission === 'granted') {
-        const message = event.is_available
-            ? `${event.name} is now available!`
-            : `${event.name} is no longer available`;
-
-        new Notification('Game Availability Update', {
-            body: message,
-            icon: '/favicon.ico',
-            tag: `game-${event.id}` // Prevents duplicate notifications
-        });
-    }
-}
-
-// Request notification permission when the page loads
-if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
 }
 
 // Add CSS for visual feedback
