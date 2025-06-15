@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductLocation;
 use App\Enums\ProductType;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\Widgets\ProductStats;
@@ -81,6 +82,10 @@ class ProductResource extends Resource
                         ->schema([
                             Select::make('type')
                                 ->options(ProductType::class),
+
+                            Select::make('location')
+                                ->options(ProductLocation::class),
+
                             Select::make('supplier_id')
                                 ->relationship('supplier', 'name')
                                 ->preload()
@@ -103,6 +108,7 @@ class ProductResource extends Resource
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')->badge(),
+                TextColumn::make('location')->badge(),
                 TextColumn::make('stock')
                     ->badge()
                     ->color(function ($record, $state) {
@@ -127,6 +133,9 @@ class ProductResource extends Resource
                 'supplier.name',
             ])
             ->filters([
+                SelectFilter::make('location')
+                    ->options(ProductLocation::class),
+
                 SelectFilter::make('stock_alert')
                     ->label('Stock Level')
                     ->options([

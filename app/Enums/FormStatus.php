@@ -5,39 +5,39 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum OpnameStatus: string implements HasColor, HasLabel
+enum FormStatus: string implements HasColor, HasLabel
 {
     case Draft = 'draft';
 
-    case Awating_Review = 'awaiting_review';
-
-    case Under_Review = 'under_review';
+    case Awaiting_Review = 'awaiting_review';
 
     case Approved = 'approved';
 
+    case Done = 'done';
+
     /**
-     * Get the label for each opname.
+     * Get the label for each form.
      */
     public function getLabel(): ?string
     {
         return match ($this) {
             self::Draft => 'Draft',
-            self::Awating_Review => 'Awaiting Review',
-            self::Under_Review => 'Under Review',
+            self::Awaiting_Review => 'Awaiting Review',
             self::Approved => 'Approved',
+            self::Done => 'Done',
         };
     }
 
     /**
-     * Get the color for each opname.
+     * Get the color for each form.
      */
     public function getColor(): string|array|null
     {
         return match ($this) {
             self::Draft => 'gray',
-            self::Awating_Review => 'info',
-            self::Under_Review => 'warning',
-            self::Approved => 'success',
+            self::Awaiting_Review => 'warning',
+            self::Approved => 'info',
+            self::Done => 'success',
         };
     }
 }

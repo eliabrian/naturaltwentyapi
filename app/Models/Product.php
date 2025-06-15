@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductLocation;
 use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +21,7 @@ class Product extends Model
         'sku',
         'name',
         'type',
+        'location',
         'unit',
         'price',
         'stock',
@@ -36,6 +38,7 @@ class Product extends Model
     {
         return [
             'type' => ProductType::class,
+            'location' => ProductLocation::class,
         ];
     }
 
@@ -52,5 +55,15 @@ class Product extends Model
     public function opnameProduct(): HasMany
     {
         return $this->hasMany(OpnameProduct::class);
+    }
+
+    public function forms(): BelongsToMany
+    {
+        return $this->belongsToMany(Form::class)->using(FormProduct::class);
+    }
+
+    public function formProducts(): HasMany
+    {
+        return $this->hasMany(FormProduct::class);
     }
 }
