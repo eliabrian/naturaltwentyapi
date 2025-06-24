@@ -81,10 +81,12 @@ class ProductResource extends Resource
                     Section::make('Relationship')
                         ->schema([
                             Select::make('type')
-                                ->options(ProductType::class),
+                                ->options(ProductType::class)
+                                ->required(),
 
                             Select::make('location')
-                                ->options(ProductLocation::class),
+                                ->options(ProductLocation::class)
+                                ->required(),
 
                             Select::make('suppliers')
                                 ->relationship('suppliers', 'name')

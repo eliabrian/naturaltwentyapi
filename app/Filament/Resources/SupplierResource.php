@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SupplierResource\Pages;
 use App\Models\Supplier;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -42,6 +43,9 @@ class SupplierResource extends Resource
                             ->email(),
 
                         TextInput::make('address'),
+
+                        RichEditor::make('note')
+                            ->columnSpan(2),
                     ])
                     ->columns(2),
 
