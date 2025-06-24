@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\ProductLocation;
 use App\Enums\UserRole;
 use App\Enums\UserType;
 use Filament\Models\Contracts\FilamentUser;
@@ -107,5 +108,20 @@ class User extends Authenticatable implements FilamentUser
     public function isDungeonMaster(): bool
     {
         return $this->role->id === UserRole::DungeonMaster->value;
+    }
+
+    public function getUserLocation(): string
+    {
+        switch ($this->role->id) {
+            case UserRole::Cashier:
+                return ProductLocation::Bar->value;
+                break;
+            default:
+            case UserRole::Chef:
+                return ProductLocation::Kitchen->value;
+                break;
+        }
+
+        return ProductLocation::Storage->value;
     }
 }

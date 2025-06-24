@@ -71,6 +71,13 @@ class FormResource extends Resource
                             Select::make('shift')
                                 ->options(OpnameShift::class)
                                 ->required(),
+
+                            Select::make('location')
+                                ->preload()
+                                ->options(ProductLocation::class)
+                                ->default(Auth::user()->getUserLocation())
+                                ->disabled()
+                                ->dehydrated(),
                         ])
                         ->columns(2),
 
@@ -110,6 +117,9 @@ class FormResource extends Resource
                 TextColumn::make('status')->badge(),
                 TextColumn::make('user.name')->searchable(),
                 TextColumn::make('shift'),
+                TextColumn::make('location')
+                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->badge(),
                 TextColumn::make('form_date')
                     ->label('Request Date')->dateTime('l, d F Y'),
             ])
@@ -159,6 +169,13 @@ class FormResource extends Resource
                 ->searchable()
                 ->preload()
                 ->default(Auth::user()->id)
+                ->disabled()
+                ->dehydrated(),
+
+            Select::make('location')
+                ->preload()
+                ->options(ProductLocation::class)
+                ->default(Auth::user()->getUserLocation())
                 ->disabled()
                 ->dehydrated(),
 

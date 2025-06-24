@@ -17,6 +17,7 @@ class Form extends Model
         'user_id',
         'status',
         'shift',
+        'location',
     ];
 
     /**
