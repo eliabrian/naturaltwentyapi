@@ -17,7 +17,6 @@ class Product extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'supplier_id',
         'sku',
         'name',
         'type',
@@ -42,9 +41,9 @@ class Product extends Model
         ];
     }
 
-    public function supplier(): BelongsTo
+    public function suppliers(): BelongsToMany
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsToMany(Supplier::class);
     }
 
     public function opnames(): BelongsToMany

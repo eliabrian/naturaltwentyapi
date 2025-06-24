@@ -86,10 +86,11 @@ class ProductResource extends Resource
                             Select::make('location')
                                 ->options(ProductLocation::class),
 
-                            Select::make('supplier_id')
-                                ->relationship('supplier', 'name')
+                            Select::make('suppliers')
+                                ->relationship('suppliers', 'name')
                                 ->preload()
                                 ->searchable()
+                                ->multiple()
                                 ->required(),
                         ]),
                 ]),
