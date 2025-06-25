@@ -48,7 +48,8 @@ class AttendanceResource extends Resource
                         Summarizer::make()
                             ->label('Total Days')
                             ->using(function (QueryBuilder $query) {
-                                return $query->count('ended_at');
+                                return $query->selectRaw('COUNT(DISTINCT CONCAT(user_id, "-", DATE(started_at))) as total')
+                                ->value('total');
                             })
                     ),
                 TextColumn::make('started_at')->dateTime('H:i:s')->color(function ($record) {
