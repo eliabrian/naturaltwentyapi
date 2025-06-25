@@ -43,7 +43,14 @@ class AttendanceResource extends Resource
             ->columns([
                 TextColumn::make('user.name')->searchable()->sortable(),
                 TextColumn::make('user.type')->badge()->label('Type'),
-                TextColumn::make('group_date')->label('Date')->sortable(),
+                TextColumn::make('group_date')->label('Date')->sortable()
+                    ->summarize(
+                        Summarizer::make()
+                            ->label('Total Days')
+                            ->using(function (QueryBuilder $query) {
+                                return $query->count('ended_at');
+                            })
+                    ),
                 TextColumn::make('started_at')->dateTime('H:i:s')->color(function ($record) {
                     $date = Carbon::parse($record->started_at);
                     $max = Carbon::create($date)->setTime(9, 0, 0);
